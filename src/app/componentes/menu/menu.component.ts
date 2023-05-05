@@ -6,7 +6,6 @@ import { Tabela } from "../../modelo/entidade/Tabela";
 import { TempoUtil } from "../../util/tempo.util";
 import { Menu } from "../../modelo/menu/Menu";
 import { Entidade } from "../../modelo/entidade/Entidade";
-import { MenuOperacoes } from "../../modelo/menu/MenuOperacoes";
 import { EntidadeAcoes } from "../../modelo/entidade/EntidadeAcoes";
 
 type MenuMat = {
@@ -14,12 +13,15 @@ type MenuMat = {
   nomePai: string | undefined;
   expansivel: boolean;
   nivel: number;
+  entidade:Entidade;
 };
+
 type MenuApp = {
   nome: string;
   nomePai: string | undefined;
   expansivel: boolean;
   nivel: number;
+  entidade:Entidade;
 };
 
 type NoIndice = {
@@ -53,7 +55,8 @@ export class MenuComponent implements OnInit{
         nome: node.nome,
         nomePai: node.nomePai,
         expansivel: !!node.submenus && node.submenus.length > 0,
-        nivel: nivel
+        nivel: nivel,
+        entidade:node.entidade
       };
     };
   
@@ -101,7 +104,7 @@ export class MenuComponent implements OnInit{
 
   ativar(node:Menu){
     console.log("MenuComponent ativar inicio");
-    this.menuAcionadoEvt.emit(new MenuOperacoes(node).toEntidade());
+    this.menuAcionadoEvt.emit(node.entidade);
     this.activeNode = node;
     console.log("MenuComponent ativar fim");
   }
