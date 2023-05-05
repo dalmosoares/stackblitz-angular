@@ -1,5 +1,5 @@
 import {Component,Input,OnChanges,OnInit,SimpleChanges} from '@angular/core';
-import { Entidade } from '../../modelo/Entidade';
+import { Entidade } from '../../modelo/entidade/Entidade';
 
 @Component({
   selector: 'app-exibir',
