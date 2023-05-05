@@ -20,14 +20,16 @@ export class EntidadeAcoes{
       return {
         nome:this.entidade.nome,
         submenus: (this.entidade as Tabela).colunas.map(c=>
-            ({nome:c.nome,nomePai:this.entidade.nome})
-        )
+            ({nome:c.nome,nomePai:this.entidade.nome,entidade:c})
+        ),
+        entidade:this.entidade
       };
     }
     else{
       return {
         nome:this.entidade.nome,
-        nomePai:(this.entidade as Coluna).nomeTabela
+        nomePai:(this.entidade as Coluna).nomeTabela,
+        entidade:this.entidade
       };
     }
   }
