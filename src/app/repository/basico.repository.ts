@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { Tabela } from "../modelo/Tabela";
+import { Tabela } from "../modelo/entidade/Tabela";
 import { TempoUtil } from "../util/tempo.util";
 
 @Injectable({

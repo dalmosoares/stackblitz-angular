@@ -2,10 +2,12 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BasicoRepository } from "../../repository/basico.repository";
-import { Tabela } from "../../modelo/Tabela";
+import { Tabela } from "../../modelo/entidade/Tabela";
 import { TempoUtil } from "../../util/tempo.util";
-import { Menu } from "../../modelo/Menu";
-import { Entidade } from "../../modelo/Entidade";
+import { Menu } from "../../modelo/menu/Menu";
+import { Entidade } from "../../modelo/entidade/Entidade";
+import { MenuOperacoes } from "../../modelo/menu/MenuOperacoes";
+import { EntidadeOperacoes } from "../../modelo/entidade/EntidadeOperacoes";
 
 type MenuMat = {
   nome: string;
@@ -67,7 +69,7 @@ export class MenuComponent implements OnInit{
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
     this.basicoRepository.tabelasObs.subscribe(tabelas=>{
       this.tabelas=tabelas;
-      this.dataSource.data = this.tabelas.map(t=>this.entidadeToMenu(t));
+      this.dataSource.data = this.tabelas.map(t=>new EntidadeOperacoes(t).toMenu());
       this.ativarPadrao();
     });
     console.log("MenuComponent contrutor fim");
@@ -79,41 +81,6 @@ export class MenuComponent implements OnInit{
 
   private temSubmenus(menu: Menu): boolean{
     return Object.prototype.hasOwnProperty.call(menu, "submenus");
-  }
-
-  entidadeToMenu(entidade:Entidade):Menu{
-    if(this.isTabela(entidade)){
-      return {
-        nome:entidade.nome,
-        submenus: entidade.colunas.map(c=>
-            ({nome:c.nome,nomePai:entidade.nome})
-        )
-      };
-    }
-    else{
-      return {
-        nome:entidade.nome,
-        nomePai:entidade.nomeTabela
-      };
-    }
-  }
-
-  menuToEntidade(menu:Menu):Entidade{
-    if(this.temSubmenus(menu)){
-      return {
-        nome:menu.nome,
-        colunas: menu.submenus?.map(submenu=>({
-          nome:submenu.nome,
-          nomeTabela:menu.nome
-        })) || []
-      };
-    }
-    else{
-      return {
-        nome:menu.nome,
-        nomeTabela:menu.nomePai || ''
-      };
-    }
   }
   
   ngOnInit(): void {
@@ -134,7 +101,7 @@ export class MenuComponent implements OnInit{
 
   ativar(node:Menu){
     console.log("MenuComponent ativar inicio");
-    this.menuAcionadoEvt.emit(this.menuToEntidade(node));
+    this.menuAcionadoEvt.emit(new MenuOperacoes(node).toEntidade());
     this.activeNode = node;
     console.log("MenuComponent ativar fim");
   }
