@@ -7,7 +7,7 @@ import { TempoUtil } from "../../util/tempo.util";
 import { Menu } from "../../modelo/menu/Menu";
 import { Entidade } from "../../modelo/entidade/Entidade";
 import { MenuOperacoes } from "../../modelo/menu/MenuOperacoes";
-import { EntidadeOperacoes } from "../../modelo/entidade/EntidadeOperacoes";
+import { EntidadeAcoes } from "../../modelo/entidade/EntidadeAcoes";
 
 type MenuMat = {
   nome: string;
@@ -73,7 +73,7 @@ export class MenuComponent implements OnInit{
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
     this.basicoRepository.tabelasObs.subscribe(tabelas=>{
       this.tabelas=tabelas;
-      this.dataSource.data = this.tabelas.map(t=>new EntidadeOperacoes(t).toMenu());
+      this.dataSource.data = this.tabelas.map(t=>new EntidadeAcoes(t).toMenu());
       this.ativarPadrao();
     });
     console.log("MenuComponent contrutor fim");

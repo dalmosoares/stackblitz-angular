@@ -3,7 +3,7 @@ import { Coluna } from "./Coluna";
 import { Entidade } from "./Entidade";
 import { Tabela } from "./Tabela";
 
-export class EntidadeOperacoes{
+export class EntidadeAcoes{
 
   entidade:Entidade;
 
