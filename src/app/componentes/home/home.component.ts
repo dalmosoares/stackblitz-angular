@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Entidade } from '../../modelo/Entidade';
+import { Entidade } from '../../modelo/entidade/Entidade';
 
 @Component({
   selector: 'app-home',
