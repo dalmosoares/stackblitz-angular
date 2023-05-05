@@ -1,5 +1,7 @@
 import { Menu } from "../menu/Menu";
+import { Coluna } from "./Coluna";
 import { Entidade } from "./Entidade";
+import { Tabela } from "./Tabela";
 
 export class EntidadeOperacoes{
 
@@ -17,7 +19,7 @@ export class EntidadeOperacoes{
     if(this.isTabela()){
       return {
         nome:this.entidade.nome,
-        submenus: this.entidade.colunas.map(c=>
+        submenus: (this.entidade as Tabela).colunas.map(c=>
             ({nome:c.nome,nomePai:this.entidade.nome})
         )
       };
@@ -25,7 +27,7 @@ export class EntidadeOperacoes{
     else{
       return {
         nome:this.entidade.nome,
-        nomePai:this.entidade.nomeTabela
+        nomePai:(this.entidade as Coluna).nomeTabela
       };
     }
   }

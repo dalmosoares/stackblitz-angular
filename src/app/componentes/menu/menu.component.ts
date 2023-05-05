@@ -74,14 +74,6 @@ export class MenuComponent implements OnInit{
     });
     console.log("MenuComponent contrutor fim");
   }
-
-  private isTabela(entidade: Entidade): entidade is Tabela {
-    return Object.prototype.hasOwnProperty.call(entidade, "colunas");
-  }
-
-  private temSubmenus(menu: Menu): boolean{
-    return Object.prototype.hasOwnProperty.call(menu, "submenus");
-  }
   
   ngOnInit(): void {
     console.log("MenuComponent ngOnInit inicio");
