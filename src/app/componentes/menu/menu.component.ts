@@ -22,6 +22,11 @@ type MenuApp = {
   nivel: number;
 };
 
+type NoIndice = {
+  pai:number;
+  filho?:number;
+};
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -38,8 +43,7 @@ export class MenuComponent implements OnInit{
   @Output() public menuAcionadoEvt = new EventEmitter<Entidade>();
   padding = 20;
   activeNode:any;
-  indiceNoPadraoPai = 0;
-  indiceNoPadraoFilho = 0;
+  noIndicePadrao:NoIndice={pai:0,filho:0};
   private tabelas:Tabela[] = [];
 
   constructor(private basicoRepository:BasicoRepository){
@@ -84,10 +88,14 @@ export class MenuComponent implements OnInit{
   ativarPadrao(){
     const t = TempoUtil.time();
     console.log("MenuComponent ativarPadrao inicio");
-    const noPadraoFilho = this.treeControl.dataNodes[this.indiceNoPadraoFilho];
-    this.ativar(noPadraoFilho);
-    const noPadraoPai = this.treeControl.dataNodes[this.indiceNoPadraoPai];
-    this.treeControl.expand(noPadraoPai);     
+    const noPadraoPai = this.treeControl.dataNodes[this.noIndicePadrao.pai];
+    this.treeControl.expand(noPadraoPai); 
+    if(this.noIndicePadrao.filho!=undefined){
+      const noPadraoFilho = this.treeControl.dataNodes[this.noIndicePadrao.filho];
+      this.ativar(noPadraoFilho);
+    }else{
+      this.ativar(noPadraoPai);
+    }
     console.log(`MenuComponent ativarPadrao fim duracao: ${TempoUtil.time()-t}`);
   }
 
